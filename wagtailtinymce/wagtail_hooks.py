@@ -34,15 +34,15 @@ from django.utils.html import format_html_join
 from django.utils.safestring import mark_safe
 from wagtail.admin.rich_text.converters.editor_html import WhitelistRule
 from wagtail.admin.templatetags.wagtailadmin_tags import hook_output
-from wagtail.core import hooks
-from wagtail.core.whitelist import attribute_rule, allow_without_attributes
+from wagtail.hooks import register
+from wagtail.whitelist import attribute_rule, allow_without_attributes
 
 
 def to_js_primitive(string):
     return mark_safe(json.dumps(escape(string)))
 
 
-@hooks.register('register_rich_text_features')
+@register('register_rich_text_features')
 def apply_whitelist(features):
     # table
     cell_attributes = attribute_rule({'rowspan': True, 'colspan': True, 'width': True, 'height': True, 'style': True})
@@ -69,7 +69,7 @@ def apply_whitelist(features):
     features.default_features.append('blockquote')
 
 
-@hooks.register('insert_editor_css')
+@register('insert_editor_css')
 def insert_editor_css():
     css_files = [
         'wagtailtinymce/css/icons.css',
@@ -92,7 +92,7 @@ def _format_js_includes(js_files):
     )
 
 
-@hooks.register('insert_editor_js')
+@register('insert_editor_js')
 def insert_editor_js():
     preload = format_html(
         '<script>'
@@ -113,7 +113,7 @@ def insert_editor_js():
     return preload + js_includes + hook_output('insert_tinymce_js')
 
 
-@hooks.register('insert_tinymce_js')
+@register('insert_tinymce_js')
 def images_richtexteditor_js():
     preload = format_html(
         """
@@ -124,7 +124,7 @@ def images_richtexteditor_js():
         """,
         to_js_primitive(static('wagtailtinymce/js/tinymce-plugins/wagtailimage.js')),
         to_js_primitive(translation.to_locale(translation.get_language())),
-        to_js_primitive(reverse('wagtailimages:chooser_select_format', args=['00000000']))
+        to_js_primitive(reverse('wagtailimages_chooser:select_format', args=['00000000']))
     )
     js_includes = _format_js_includes([
         'wagtailimages/js/image-chooser-modal.js',
@@ -133,7 +133,7 @@ def images_richtexteditor_js():
     return preload + js_includes
 
 
-@hooks.register('insert_tinymce_js')
+@register('insert_tinymce_js')
 def embeds_richtexteditor_js():
     preload = format_html(
         """
@@ -150,7 +150,7 @@ def embeds_richtexteditor_js():
     return preload + js_includes
 
 
-@hooks.register('insert_tinymce_js')
+@register('insert_tinymce_js')
 def links_richtexteditor_js():
     preload = format_html(
         """
@@ -168,7 +168,7 @@ def links_richtexteditor_js():
     return preload + js_includes
 
 
-@hooks.register('insert_tinymce_js')
+@register('insert_tinymce_js')
 def docs_richtexteditor_js():
     preload = format_html(
         """

@@ -8,6 +8,15 @@ Wagtail TinyMCE offers integration of the
 
 As of Wagtail 1.5 this integrates using Wagtail's alternative rich text editor feature and requires no extra customisation or patching.
 
+Caltech Fork
+============
+
+In August 2022, we wanted a WYSIWYG editor for tables in the Caltech catalog. Specifically, we
+needed something that would let us do row-spans and column-spans to make the table headers that were
+in use in the catalog when it was built in InDesign. This [issue on the original repo](https://github.com/isotoma/wagtailtinymce/issues/28)
+pointed us to a [fork that was working as of Wagtail 2](https://github.com/Junatum/wagtailtinymce/tree/custom-1.2).
+Our fork updates this project to work with Wagtail 4.x.
+
 Installation
 ============
 

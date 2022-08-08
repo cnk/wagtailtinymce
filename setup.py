@@ -40,12 +40,12 @@ def read(filename):
 
 
 install_requires = [
-    'wagtail>=2.7',
+    'wagtail>=3.0',
 ]
 
 setup(
     name='wagtailtinymce',
-    version='4.7.13.7',
+    version='4.7.13.8',
     description='A TinyMCE editor integration for Wagtail',
     author='Richard Mitchell',
     author_email='richard.mitchell@isotoma.com',

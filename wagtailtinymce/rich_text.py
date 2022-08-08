@@ -27,9 +27,9 @@ import json
 from django.conf import settings
 from django.forms import widgets
 from django.utils import translation
-from wagtail.admin.edit_handlers import RichTextFieldPanel
+from wagtail.admin.panels import FieldPanel
 from wagtail.admin.rich_text.converters.editor_html import EditorHTMLConverter
-from wagtail.core.rich_text import features
+from wagtail.rich_text import features
 from wagtail.utils.widgets import WidgetWithScript
 
 
@@ -76,7 +76,7 @@ class TinyMCERichTextArea(WidgetWithScript, widgets.Textarea):
             self.converter = EditorHTMLConverter(self.features)
 
     def get_panel(self):
-        return RichTextFieldPanel
+        return FieldPanel
 
     def render(self, name, value, attrs=None, renderer=None):
         if value is None:

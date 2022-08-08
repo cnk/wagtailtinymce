@@ -1,6 +1,13 @@
 Changes
 =======
 
+4.7.13.8 (2022-08-08)
+--------------------
+
+- Forked from https://github.com/Junatum/wagtailtinymce/ and started from the
+  custom-1.2 branch to make changes for Wagtail 4
+
+
 4.7.13.7 (2019-08-21)
 --------------------
 
