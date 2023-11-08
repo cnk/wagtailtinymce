@@ -70,7 +70,7 @@ def apply_whitelist(features):
 
 
 @register('insert_global_admin_css')
-def insert_editor_css():
+def insert_global_admin_css():
     css_files = [
         'wagtailtinymce/css/icons.css',
         'wagtailtinymce/js/vendor/tinymce/skins/lightgray/skin.min.css',
