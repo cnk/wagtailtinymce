@@ -69,7 +69,7 @@ def apply_whitelist(features):
     features.default_features.append('blockquote')
 
 
-@register('insert_editor_css')
+@register('insert_global_admin_css')
 def insert_editor_css():
     css_files = [
         'wagtailtinymce/css/icons.css',
