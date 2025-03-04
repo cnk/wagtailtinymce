@@ -120,11 +120,13 @@ def images_richtexteditor_js():
         <script>
             registerMCEPlugin("wagtailimage", {}, {});
             window.chooserUrls.imageChooserSelectFormat = {};
+            window.chooserUrls.imageChooser = {};
         </script>
         """,
         to_js_primitive(static('wagtailtinymce/js/tinymce-plugins/wagtailimage.js')),
         to_js_primitive(translation.to_locale(translation.get_language())),
-        to_js_primitive(reverse('wagtailimages_chooser:select_format', args=['00000000']))
+        to_js_primitive(reverse('wagtailimages_chooser:select_format', args=['00000000'])),
+        to_js_primitive(reverse('wagtailimages_chooser:choose'))
     )
     js_includes = _format_js_includes([
         'wagtailimages/js/image-chooser-modal.js',
@@ -156,10 +158,18 @@ def links_richtexteditor_js():
         """
         <script>
             registerMCEPlugin("wagtaillink", {}, {});
+            window.chooserUrls.pageChooser = {};
+            window.chooserUrls.emailLinkChooser = {};
+            window.chooserUrls.anchorLinkChooser = {};
+            window.chooserUrls.externalLinkChooser = {};
         </script>
         """,
         to_js_primitive(static('wagtailtinymce/js/tinymce-plugins/wagtaillink.js')),
         to_js_primitive(translation.to_locale(translation.get_language())),
+        to_js_primitive(reverse('wagtailadmin_choose_page')),
+        to_js_primitive(reverse('wagtailadmin_choose_page_email_link')),
+        to_js_primitive(reverse('wagtailadmin_choose_page_anchor_link')),
+        to_js_primitive(reverse('wagtailadmin_choose_page_external_link')),
     )
     js_includes = _format_js_includes([
         'wagtailadmin/js/page-chooser.js',

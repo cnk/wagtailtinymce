@@ -61,7 +61,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 url = window.chooserUrls.pageChooser;
                 urlParams = {
                     'allow_external_link': true,
-                    'allow_email_link': true
+                    'allow_email_link': true,
+                    'allow_anchor_link': true,
                 };
 
                 mceSelection = editor.selection;
@@ -80,6 +81,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     else if (href.startsWith('mailto:')) {
                         url = window.chooserUrls.emailLinkChooser;
                         href = href.replace('mailto:', '');
+                        urlParams['link_url'] = href;
+                    }
+                    else if (href.startsWith('#')) {
+                        url = window.chooserUrls.anchorLinkChooser;
+                        href = href.replace('#', '');
                         urlParams['link_url'] = href;
                     }
                     else if (!linkType) {
