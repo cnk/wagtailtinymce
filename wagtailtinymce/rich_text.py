@@ -24,6 +24,7 @@
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import json
+from bs4 import BeautifulSoup
 from django.conf import settings
 from django.forms import widgets
 from django.utils import translation
@@ -121,3 +122,29 @@ class TinyMCERichTextArea(WidgetWithScript, widgets.Textarea):
             return None
 
         return self.converter.to_database_format(original_value)
+
+    def format_value(self, value):
+        """
+        Prevent TinyMCE from converting links with linktype attribute to anchors.
+        """
+        value = super().format_value(value)
+        if value:
+            soup = BeautifulSoup(value, 'html.parser')
+            for tag in soup.find_all('a'):
+                if tag.has_attr('linktype'):
+                    if tag['linktype'] == 'page':
+                        from wagtail.models import Page
+                        page = Page.objects.get(id=tag['id'])
+                        tag['href'] = page.get_url() if page else '#'
+                        tag['data-id'] = page.id
+                        tag['data-linktype'] = 'page'
+                        tag['data-parent-id'] = page.get_parent().id
+                    elif tag['linktype'] == 'document':
+                        from wagtail.documents.models import Document
+                        document = Document.objects.get(id=tag['id'])
+                        tag['href'] = document.url if document else '#'
+                        tag['data-id'] = document.id
+                        tag['data-linktype'] = 'document'
+                    # NOTE: Edit this part to support other linktypes
+            value = str(soup)
+        return value
