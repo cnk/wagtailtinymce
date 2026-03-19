@@ -53,12 +53,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
     (function($) {
         tinymce.PluginManager.add('wagtaillink', function (editor) {
+            function getChooserUrls() {
+                return editor.settings.chooserUrls || window.chooserUrls || {};
+            }
 
             function showDialog() {
-                var url, urlParams, mceSelection, $currentNode, $targetNode, currentText, insertElement;
+                var url, urlParams, mceSelection, $currentNode, $targetNode, currentText, insertElement, chooserUrls;
 
                 currentText = '';
-                url = window.chooserUrls.pageChooser;
+                chooserUrls = getChooserUrls();
+                url = chooserUrls.pageChooser;
                 urlParams = {
                     'allow_external_link': true,
                     'allow_email_link': true,
@@ -76,20 +80,20 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     var parentPageId = $targetNode.data('parent-id');
                     var href = $targetNode.attr('href');
                     if (linkType == 'page' && parentPageId) {
-                        url = window.chooserUrls.pageChooser + parentPageId.toString() + '/';
+                        url = chooserUrls.pageChooser + parentPageId.toString() + '/';
                     }
                     else if (href.startsWith('mailto:')) {
-                        url = window.chooserUrls.emailLinkChooser;
+                        url = chooserUrls.emailLinkChooser;
                         href = href.replace('mailto:', '');
                         urlParams['link_url'] = href;
                     }
                     else if (href.startsWith('#')) {
-                        url = window.chooserUrls.anchorLinkChooser;
+                        url = chooserUrls.anchorLinkChooser;
                         href = href.replace('#', '');
                         urlParams['link_url'] = href;
                     }
                     else if (!linkType) {
-                        url = window.chooserUrls.externalLinkChooser;
+                        url = chooserUrls.externalLinkChooser;
                         urlParams['link_url'] = href;
                     }
                     if( $targetNode.children().length == 0 )

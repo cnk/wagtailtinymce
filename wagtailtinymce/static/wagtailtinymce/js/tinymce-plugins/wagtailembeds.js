@@ -30,6 +30,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
     (function($) {
         tinymce.PluginManager.add('wagtailembeds', function(editor) {
+            function getChooserUrls() {
+                return editor.settings.chooserUrls || window.chooserUrls || {};
+            }
 
             /* stop editing and resizing of embedded media content */
             function fixContent() {
@@ -39,9 +42,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             }
 
             function showDialog() {
-                var url, urlParams, mceSelection, $currentNode, $targetNode, insertElement;
+                var url, urlParams, mceSelection, $currentNode, $targetNode, insertElement, chooserUrls;
 
-                url = window.chooserUrls.embedsChooser;
+                chooserUrls = getChooserUrls();
+                url = chooserUrls.embedsChooser;
                 mceSelection = editor.selection;
                 $currentNode = $(mceSelection.getEnd());
                 // target selected embed (if any)

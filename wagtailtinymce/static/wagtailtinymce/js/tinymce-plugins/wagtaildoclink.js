@@ -50,12 +50,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
     (function($) {
         tinymce.PluginManager.add('wagtaildoclink', function (editor) {
+            function getChooserUrls() {
+                return editor.settings.chooserUrls || window.chooserUrls || {};
+            }
 
             function showDialog() {
-                var url, urlParams, mceSelection, $currentNode, $targetNode, currentText, insertElement;
+                var url, urlParams, mceSelection, $currentNode, $targetNode, currentText, insertElement, chooserUrls;
 
                 currentText = '';
-                url = window.chooserUrls.documentChooser;
+                chooserUrls = getChooserUrls();
+                url = chooserUrls.documentChooser;
                 urlParams = {};
 
                 mceSelection = editor.selection;

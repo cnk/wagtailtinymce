@@ -27,6 +27,7 @@ import json
 from bs4 import BeautifulSoup
 from django.conf import settings
 from django.forms import widgets
+from django.urls import reverse
 from django.utils import translation
 from wagtail.admin.panels import FieldPanel
 from wagtail.admin.rich_text.converters.editor_html import EditorHTMLConverter
@@ -90,6 +91,16 @@ class TinyMCERichTextArea(WidgetWithScript, widgets.Textarea):
     def render_js_init(self, id_, name, value):
         kwargs = {
             'options': self.kwargs.get('options', {}),
+            'chooserUrls': {
+                'pageChooser': reverse('wagtailadmin_choose_page'),
+                'externalLinkChooser': reverse('wagtailadmin_choose_page_external_link'),
+                'emailLinkChooser': reverse('wagtailadmin_choose_page_email_link'),
+                'anchorLinkChooser': reverse('wagtailadmin_choose_page_anchor_link'),
+                'documentChooser': reverse('wagtaildocs_chooser:choose'),
+                'embedsChooser': reverse('wagtailembeds:chooser'),
+                'imageChooser': reverse('wagtailimages_chooser:choose'),
+                'imageChooserSelectFormat': reverse('wagtailimages_chooser:select_format', args=['00000000']),
+            },
         }
 
         if 'buttons' in self.kwargs:
@@ -140,8 +151,8 @@ class TinyMCERichTextArea(WidgetWithScript, widgets.Textarea):
                         tag['data-linktype'] = 'page'
                         tag['data-parent-id'] = page.get_parent().id
                     elif tag['linktype'] == 'document':
-                        from wagtail.documents.models import Document
-                        document = Document.objects.get(id=tag['id'])
+                        from wagtail.documents import get_document_model
+                        document = get_document_model().objects.get(id=tag['id'])
                         tag['href'] = document.url if document else '#'
                         tag['data-id'] = document.id
                         tag['data-linktype'] = 'document'

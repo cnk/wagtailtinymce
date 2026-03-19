@@ -30,6 +30,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
     (function($) {
         tinymce.PluginManager.add('wagtailimage', function(editor) {
+            function getChooserUrls() {
+                return editor.settings.chooserUrls || window.chooserUrls || {};
+            }
 
             /* stop editing and resizing of embedded image content */
             function fixContent() {
@@ -39,14 +42,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             }
 
             function showDialog() {
-                var url, urlParams, mceSelection, $currentNode, $targetNode, insertElement;
+                var url, urlParams, mceSelection, $currentNode, $targetNode, insertElement, chooserUrls;
 
+                chooserUrls = getChooserUrls();
                 mceSelection = editor.selection;
                 $currentNode = $(mceSelection.getEnd());
                 // target selected image (if any)
                 $targetNode = $currentNode.closest('[data-embedtype=image]');
                 if ($targetNode.length) {
-                    url = window.chooserUrls.imageChooserSelectFormat;
+                    url = chooserUrls.imageChooserSelectFormat;
                     url = url.replace('00000000', $targetNode.data('id'));
                     urlParams = {
                         edit: 1,
@@ -61,7 +65,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     };
                 }
                 else {
-                    url = window.chooserUrls.imageChooser;
+                    url = chooserUrls.imageChooser;
                     urlParams = {
                         select_format: true
                     };
