@@ -40,16 +40,16 @@ def read(filename):
 
 
 install_requires = [
-    'wagtail>=3.0',
+    'wagtail>=7.0',
 ]
 
 setup(
     name='wagtailtinymce',
-    version='4.7.13.8',
+    version='4.7.13.9',
     description='A TinyMCE editor integration for Wagtail',
-    author='Richard Mitchell',
-    author_email='richard.mitchell@isotoma.com',
-    url='https://github.com/isotoma/wagtailtinymce.git',
+    author='Cynthia Kiser',
+    author_email='cnk@caltech.edu',
+    url='https://github.com/cnk/wagtailtinymce.git',
     packages=find_packages(),
     include_package_data=True,
     license='New BSD',
@@ -63,9 +63,10 @@ setup(
         'License :: OSI Approved :: BSD License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.11',
         'Framework :: Django',
-        'Framework :: Django :: 2.2',
+        'Framework :: Django :: 5.2',
+        'Framework :: Wagtail :: 7.0',
         'Topic :: Internet :: WWW/HTTP :: Site Management',
     ],
     install_requires=install_requires,

@@ -1,6 +1,11 @@
 Changes
 =======
 
+4.7.13.9 (2026-03-20)
+--------------------
+
+- Updated this version to work with Wagtail >= 7.0 - please see README.rst for instructions.
+
 4.7.13.8 (2022-08-08)
 --------------------
 

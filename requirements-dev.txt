@@ -1,5 +1,5 @@
-wagtail>=4
-Django
+wagtail>=7.0
+Django>=5.2
 
 # For translations
 polib

@@ -16,16 +16,15 @@ needed something that would let us do row-spans and column-spans to make the tab
 in use in the catalog when it was built in InDesign. This `issue on the original repo
 <https://github.com/isotoma/wagtailtinymce/issues/28>`__ pointed us to a `fork that was working as of Wagtail 2
 <https://github.com/Junatum/wagtailtinymce/tree/custom-1.2>`__.
-Our fork updates this project to work with Wagtail 4.x to Wagtail 6.x.
+Our fork updates this project to work with Wagtail 7.x.
 
 This package is using TinyMCE 4.7.13 and documents can be found at their
 `repository <https://github.com/tinymce/tinymce-docs-4x>`__.
 
 .. important::
 
-    To support Wagtail 7 in the future, we will need to remove the usage
-    of ``WidgetWithScript`` for ``wagtailtinymce.rich_text.TinyMCERichTextArea``
-    class and add a custom Stimulus controller.
+    To work with Wagtail 7 you will need to patch your project to provide the
+    ``WidgetWithScript`` class that was removed in Wagtail 7.0.
 
 Installation
 ============
